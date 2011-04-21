@@ -7,4 +7,4 @@ module SexyPgConstraints
   autoload :Helpers
 end
 
-require 'sexy_pg_constraints/initializer'
+require 'sexy_pg_constraints/railtie' if defined?(Rails)
