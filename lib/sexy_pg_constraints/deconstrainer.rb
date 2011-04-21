@@ -1,5 +1,5 @@
 module SexyPgConstraints
-  class DeConstrainer
+  class Deconstrainer
     include SexyPgConstraints::Helpers
   
     def initialize(table, columns = [])
