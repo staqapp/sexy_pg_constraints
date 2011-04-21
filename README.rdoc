@@ -4,10 +4,11 @@ If you're on PostgreSQL and see the importance of data-layer constraints - this 
 
 == Install
 As a gem
-  gem install maxim-sexy_pg_constraints --source http://gems.github.com
+  gem install Empact-sexy_pg_constraints
 or as a plugin
-  script/plugin install git://github.com/maxim/sexy_pg_constraints.git
-	
+  script/plugin install git://github.com/Empact/sexy_pg_constraints.git
+or in bundler
+  gem 'Empact-sexy_pg_constraints', :require => 'sexy_pg_constraints'
 
 One more thing. Make sure that in your environment.rb file you have the following line uncommented.
 
