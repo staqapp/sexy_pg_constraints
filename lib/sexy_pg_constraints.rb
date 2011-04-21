@@ -1,8 +1,8 @@
-require 'initializer'
-require "helpers"
-require "constrainer"
-require "deconstrainer"
-require "constraints"
+require 'sexy_pg_constraints/initializer'
+require "sexy_pg_constraints/helpers"
+require "sexy_pg_constraints/constrainer"
+require "sexy_pg_constraints/deconstrainer"
+require "sexy_pg_constraints/constraints"
 
 module SexyPgConstraints
   def constrain(*args)
