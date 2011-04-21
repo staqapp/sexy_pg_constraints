@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/test_helper.rb'
+require 'test_helper'
 
 class SexyPgConstraintsTest < Test::Unit::TestCase
   def setup
@@ -495,7 +495,7 @@ class SexyPgConstraintsTest < Test::Unit::TestCase
       book.isbn = 'foo'
     end
 
-    assert_prohibits Book, :isbn, :unique, 'unique' do |book|
+    assert_prohibits Book, :isbn, :unique, 'unique', ActiveRecord::RecordNotUnique do |book|
       book.isbn = 'foo'
     end
 
@@ -513,7 +513,7 @@ class SexyPgConstraintsTest < Test::Unit::TestCase
       book.as = 'foo'
     end
 
-    assert_prohibits Book, :as, :unique, 'unique' do |book|
+    assert_prohibits Book, :as, :unique, 'unique', ActiveRecord::RecordNotUnique do |book|
       book.as = 'foo'
     end
 
@@ -659,7 +659,7 @@ class SexyPgConstraintsTest < Test::Unit::TestCase
   def test_reference
     ActiveRecord::Migration.constrain :books, :author_id, :reference => {:authors => :id}
 
-    assert_prohibits Book, :author_id, :reference, 'foreign key' do |book|
+    assert_prohibits Book, :author_id, :reference, 'foreign key', ActiveRecord::InvalidForeignKey do |book|
       book.author_id = 1
     end
 
@@ -684,7 +684,7 @@ class SexyPgConstraintsTest < Test::Unit::TestCase
   def test_reference_on_a_column_whose_name_is_a_sql_keyword
     ActiveRecord::Migration.constrain :books, :from, :reference => {:authors => :id}
 
-    assert_prohibits Book, :from, :reference, 'foreign key' do |book|
+    assert_prohibits Book, :from, :reference, 'foreign key', ActiveRecord::InvalidForeignKey do |book|
       book.from = 1
     end
 
@@ -811,7 +811,7 @@ class SexyPgConstraintsTest < Test::Unit::TestCase
       book.isbn = 'foo'
     end
 
-    assert_prohibits Book, [:title, :isbn], :unique, 'unique' do |book|
+    assert_prohibits Book, [:title, :isbn], :unique, 'unique', ActiveRecord::RecordNotUnique do |book|
       book.title = 'foo'
       book.isbn = 'bar'
     end
@@ -839,7 +839,7 @@ class SexyPgConstraintsTest < Test::Unit::TestCase
       book.isbn = 'foo'
     end
 
-    assert_prohibits Book, [:title, :isbn], :unique, 'unique' do |book|
+    assert_prohibits Book, [:title, :isbn], :unique, 'unique', ActiveRecord::RecordNotUnique do |book|
       book.title = 'foo'
       book.isbn = 'bar'
     end
