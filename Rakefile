@@ -12,11 +12,11 @@ require 'rake'
 require 'jeweler'
 Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
-  gem.name = 'sexy_pg_constraints'
+  gem.name = 'Empact-sexy_pg_constraints'
   gem.homepage = "http://github.com/maxim/sexy_pg_constraints"
   gem.description = "Use migrations and simple syntax to manage constraints in PostgreSQL DB."
-  gem.email = "max@bitsonnet.com"
-  gem.authors = ["Maxim Chernyak"]
+  gem.email = "ben.woosley@gmail.com"
+  gem.authors = ["Maxim Chernyak", "Ben Woosley"]
   # Include your dependencies below. Runtime dependencies are required when using your gem,
   # and development dependencies are only needed for development (ie running rake tasks, tests, etc)
   #  gem.add_runtime_dependency 'jabber4r', '> 0.1'
