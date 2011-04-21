@@ -10,6 +10,10 @@ end
 require 'active_support/core_ext/class/attribute_accessors'
 require 'active_support/core_ext/module/delegation'
 require 'active_record'
+
+db_config_path = File.join(File.dirname(__FILE__), 'support', 'database.yml')
+ActiveRecord::Base.establish_connection(YAML::load(open(db_config_path)))
+
 require 'test/unit'
 require 'shoulda'
 
@@ -18,10 +22,6 @@ $LOAD_PATH.unshift(File.dirname(__FILE__))
 require "sexy_pg_constraints"
 require 'support/models'
 require 'support/assert_prohibits_allows'
-
-db_config_path = File.join(File.dirname(__FILE__), 'support', 'database.yml')
-ActiveRecord::Base.establish_connection(YAML::load(open(db_config_path)))
-ActiveRecord::ConnectionAdapters::PostgreSQLAdapter.send(:include, SexyPgConstraints)
 
 class Test::Unit::TestCase
 end

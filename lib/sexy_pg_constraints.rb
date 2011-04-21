@@ -1,4 +1,3 @@
-require 'sexy_pg_constraints/initializer'
 require "sexy_pg_constraints/helpers"
 require "sexy_pg_constraints/constrainer"
 require "sexy_pg_constraints/deconstrainer"
@@ -21,3 +20,5 @@ module SexyPgConstraints
     end
   end
 end
+
+require 'sexy_pg_constraints/initializer'
