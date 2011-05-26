@@ -38,11 +38,24 @@ module SexyPgConstraints
     # Example:
     #   constrain :books, :year, :within => 1980..2008
     #   constrain :books, :year, :within => 1980...2009
-    # (the two lines above do the same thing)
+    #   constrain :books, :year, :within => {:range => 1979..2008, :exclude_beginning => true}
+    #   constrain :books, :year, :within => {:range => 1979..2009, :exclude_beginning => true, :exclude_end => true}
+    # (the four lines above do the same thing)
     #
     def within(table, column, options)
       column_ref = column.to_s.include?('.') ? column : "#{table}.#{column}"
-      "check (#{column_ref} >= #{options.begin} and #{column_ref} #{options.exclude_end? ? ' < ' : ' <= '} #{options.end})"
+      if options.respond_to?(:to_hash)
+        options = options.to_hash
+        options.assert_valid_keys(:range, :exclude_end, :exclude_beginning)
+        range = options.fetch(:range)
+        exclude_end = options.has_key?(:exclude_end) ? options.fetch(:exclude_end) : range.exclude_end?
+        exclude_beginning = options.has_key?(:exclude_beginning) ? options.fetch(:exclude_beginning) : false
+      else
+        range = options
+        exclude_end = range.exclude_end?
+        exclude_beginning = false
+      end
+      "check (#{column_ref} >#{'=' unless exclude_beginning} #{range.begin} and #{column_ref} <#{'=' unless exclude_end} #{range.end})"
     end
 
     ##
