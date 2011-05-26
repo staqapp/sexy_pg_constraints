@@ -105,7 +105,47 @@ module SexyPgConstraints
     #   constrain :books, :quantity, :positive => true
     #
     def positive(table, column, options)
-      "check (#{table}.#{column} >= 0)"
+      greater_than_or_equal_to(table, column, 0)
+    end
+
+    ##
+    # Allow only values less than the provided limit.
+    #
+    # Example:
+    #   constrain :books, :quantity, :greater_than => 12
+    #
+    def less_than(table, column, options)
+      "check (#{table}.#{column} < #{options})"
+    end
+
+    ##
+    # Allow only values less than or equal to the provided limit.
+    #
+    # Example:
+    #   constrain :books, :quantity, :greater_than => 12
+    #
+    def less_than_or_equal_to(table, column, options)
+      "check (#{table}.#{column} <= #{options})"
+    end
+
+    ##
+    # Allow only values greater than the provided limit.
+    #
+    # Example:
+    #   constrain :books, :quantity, :greater_than => 12
+    #
+    def greater_than(table, column, options)
+      "check (#{table}.#{column} > #{options})"
+    end
+
+    ##
+    # Allow only values greater than or equal to the provided limit.
+    #
+    # Example:
+    #   constrain :books, :quantity, :greater_than_or_equal_to => 12
+    #
+    def greater_than_or_equal_to(table, column, options)
+      "check (#{table}.#{column} >= #{options})"
     end
 
     ##
