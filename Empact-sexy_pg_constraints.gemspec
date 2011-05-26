@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{Empact-sexy_pg_constraints}
-  s.version = "0.2.0"
+  s.version = "0.2.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Maxim Chernyak", "Ben Woosley"]
-  s.date = %q{2011-04-21}
+  s.date = %q{2011-05-26}
   s.description = %q{Use migrations and simple syntax to manage constraints in PostgreSQL DB.}
   s.email = %q{ben.woosley@gmail.com}
   s.extra_rdoc_files = [
@@ -18,6 +18,7 @@ Gem::Specification.new do |s|
   ]
   s.files = [
     "CHANGELOG.rdoc",
+    "Empact-sexy_pg_constraints.gemspec",
     "Gemfile",
     "Gemfile.lock",
     "LICENSE.txt",
@@ -30,8 +31,8 @@ Gem::Specification.new do |s|
     "lib/sexy_pg_constraints/constraints.rb",
     "lib/sexy_pg_constraints/deconstrainer.rb",
     "lib/sexy_pg_constraints/helpers.rb",
-    "lib/sexy_pg_constraints/initializer.rb",
-    "sexy_pg_constraints.gemspec",
+    "lib/sexy_pg_constraints/railtie.rb",
+    "lib/sexy_pg_constraints/schema_definitions.rb",
     "test/sexy_pg_constraints_test.rb",
     "test/support/assert_prohibits_allows.rb",
     "test/support/database.yml.example",
