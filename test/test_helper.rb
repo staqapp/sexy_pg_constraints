@@ -27,3 +27,15 @@ ActiveRecord::ConnectionAdapters::PostgreSQLAdapter.send(:include, SexyPgConstra
 
 class Test::Unit::TestCase
 end
+
+class SexyPgConstraintsTest < Test::Unit::TestCase
+  def setup
+    CreateBooks.up
+    CreateAuthors.up
+  end
+
+  def teardown
+    CreateBooks.down
+    CreateAuthors.down
+  end
+end
