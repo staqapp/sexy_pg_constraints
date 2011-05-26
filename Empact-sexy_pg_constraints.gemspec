@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{Empact-sexy_pg_constraints}
-  s.version = "0.2.2"
+  s.version = "0.2.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Maxim Chernyak", "Ben Woosley"]
@@ -33,21 +33,51 @@ Gem::Specification.new do |s|
     "lib/sexy_pg_constraints/helpers.rb",
     "lib/sexy_pg_constraints/railtie.rb",
     "lib/sexy_pg_constraints/schema_definitions.rb",
-    "test/sexy_pg_constraints_test.rb",
+    "test/alphanumeric_test.rb",
+    "test/blacklist_test.rb",
+    "test/email_test.rb",
+    "test/exact_length_test.rb",
+    "test/format_test.rb",
+    "test/general_test.rb",
+    "test/greater_less_than_test.rb",
+    "test/length_within_test.rb",
+    "test/lowercase_test.rb",
+    "test/not_blank_test.rb",
+    "test/odd_event_test.rb",
+    "test/positive_test.rb",
+    "test/reference_test.rb",
     "test/support/assert_prohibits_allows.rb",
     "test/support/database.yml.example",
     "test/support/models.rb",
-    "test/test_helper.rb"
+    "test/test_helper.rb",
+    "test/whitelist_test.rb",
+    "test/within_test.rb",
+    "test/xor_test.rb"
   ]
   s.homepage = %q{http://github.com/maxim/sexy_pg_constraints}
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.7.2}
   s.summary = nil
   s.test_files = [
-    "test/sexy_pg_constraints_test.rb",
+    "test/alphanumeric_test.rb",
+    "test/blacklist_test.rb",
+    "test/email_test.rb",
+    "test/exact_length_test.rb",
+    "test/format_test.rb",
+    "test/general_test.rb",
+    "test/greater_less_than_test.rb",
+    "test/length_within_test.rb",
+    "test/lowercase_test.rb",
+    "test/not_blank_test.rb",
+    "test/odd_event_test.rb",
+    "test/positive_test.rb",
+    "test/reference_test.rb",
     "test/support/assert_prohibits_allows.rb",
     "test/support/models.rb",
-    "test/test_helper.rb"
+    "test/test_helper.rb",
+    "test/whitelist_test.rb",
+    "test/within_test.rb",
+    "test/xor_test.rb"
   ]
 
   if s.respond_to? :specification_version then
