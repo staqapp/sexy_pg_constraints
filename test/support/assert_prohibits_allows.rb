@@ -8,7 +8,7 @@ module AssertProhibitsAllows
     error = assert_raise exception_type do
       book.save
     end
-    assert_match /PGError/, error.message
+    assert_match /PG::Error: ERROR:/, error.message
     assert_match /violates #{constraint_type} constraint/, error.message
     assert_match /"#{model.table_name}_#{column}_(#{Array(constraint).map {|c| c.to_s }.join('|')})"/, error.message if constraint_type == 'check'
   end
