@@ -1,6 +1,7 @@
 module SexyPgConstraints
   extend ActiveSupport::Autoload
   autoload :SchemaDefinitions
+  autoload :SchemaDumper
   autoload :Constraints
 end
 
