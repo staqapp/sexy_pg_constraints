@@ -1,57 +1,33 @@
 require 'test_helper'
 
 class NotBlankTest < SexyPgConstraintsTest
-  def test_not_blank
-    ActiveRecord::Migration.constrain :books, :author, :not_blank => true
+  def assert_protects_from_blank(column, contraint)
+    ActiveRecord::Migration.constrain :books, column, contraint => true
 
-    assert_prohibits Book, :author, :not_blank do |book|
-      book.author = ' '
+    assert_prohibits Book, column, contraint do |book|
+      book.send("#{column}=", ' ')
     end
 
     assert_allows Book do |book|
-      book.author = 'foo'
+      book.send("#{column}=", 'foo')
     end
 
-    ActiveRecord::Migration.deconstrain :books, :author, :not_blank
+    ActiveRecord::Migration.deconstrain :books, column, contraint
 
     assert_allows Book do |book|
-      book.author = ' '
+      book.send("#{column}=", ' ')
     end
   end
 
   def test_not_blank
-    ActiveRecord::Migration.constrain :books, :author, :present => true
+    assert_protects_from_blank(:author, :not_blank)
+  end
 
-    assert_prohibits Book, :author, :present do |book|
-      book.author = ' '
-    end
-
-    assert_allows Book do |book|
-      book.author = 'foo'
-    end
-
-    ActiveRecord::Migration.deconstrain :books, :author, :present
-
-    assert_allows Book do |book|
-      book.author = ' '
-    end
+  def test_present
+    assert_protects_from_blank(:author, :present)
   end
 
   def test_not_blank_on_a_column_whose_name_is_a_sql_keyword
-    ActiveRecord::Migration.constrain :books, :as, :not_blank => true
-
-    assert_prohibits Book, :as, :not_blank do |book|
-      book.as = ' '
-    end
-
-    assert_allows Book do |book|
-      book.as = 'foo'
-    end
-
-    ActiveRecord::Migration.deconstrain :books, :as, :not_blank
-
-    assert_allows Book do |book|
-      book.as = ' '
-    end
+    assert_protects_from_blank(:as, :not_blank)
   end
 end
