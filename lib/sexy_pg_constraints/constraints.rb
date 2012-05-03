@@ -29,10 +29,39 @@ module SexyPgConstraints
     #   constrain :books, :title, :not_blank => true
     #
     def not_blank(table, column, options)
-      "check ( length(trim(both from #{table}.#{column})) > 0 )"
+      "check ( length(btrim(#{table}.#{column})) > 0 )"
     end
     alias_method :present, :not_blank
     module_function :present
+
+    ##
+    # The value must have characters other than those listed in the option string.
+    #
+    # Example:
+    #   constrain :books, :title, :not_only => 'abcd'
+    #
+    def not_only(table, column, options)
+      "check ( length(btrim(#{table}.#{column}, E'#{options}')) > 0 )"
+    end
+
+    ##
+    # The value must not have leading or trailing spaces.
+    #
+    # You can pass a string as an option to indicate what characters are trimmed.
+    #
+    # Example:
+    #   constrain :books, :title, :trimmed => true
+    #   constrain :books, :title, :trimmed => "abc"
+    #
+    def trimmed(table, column, options)
+      if options == true
+        "check (length(#{table}.#{column}) = length(btrim(#{table}.#{column})))"
+      else
+        "check (length(#{table}.#{column}) = length(btrim(#{table}.#{column}, E'#{options}')))"
+      end
+    end
+    alias_method :stripped, :trimmed
+    module_function :stripped
 
     ##
     # The numeric value must be within given range.
