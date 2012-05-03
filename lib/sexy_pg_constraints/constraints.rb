@@ -31,6 +31,8 @@ module SexyPgConstraints
     def not_blank(table, column, options)
       "check ( length(trim(both from #{table}.#{column})) > 0 )"
     end
+    alias_method :present, :not_blank
+    module_function :present
 
     ##
     # The numeric value must be within given range.

@@ -19,6 +19,24 @@ class NotBlankTest < SexyPgConstraintsTest
     end
   end
 
+  def test_not_blank
+    ActiveRecord::Migration.constrain :books, :author, :present => true
+
+    assert_prohibits Book, :author, :present do |book|
+      book.author = ' '
+    end
+
+    assert_allows Book do |book|
+      book.author = 'foo'
+    end
+
+    ActiveRecord::Migration.deconstrain :books, :author, :present
+
+    assert_allows Book do |book|
+      book.author = ' '
+    end
+  end
+
   def test_not_blank_on_a_column_whose_name_is_a_sql_keyword
     ActiveRecord::Migration.constrain :books, :as, :not_blank => true
 
