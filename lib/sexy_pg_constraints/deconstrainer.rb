@@ -1,6 +1,6 @@
 module SexyPgConstraints
   class Deconstrainer
-    include SexyPgConstraints::Helpers
+    extend SexyPgConstraints::Helpers
   
     def initialize(table, columns = [])
       @table = table.to_s
