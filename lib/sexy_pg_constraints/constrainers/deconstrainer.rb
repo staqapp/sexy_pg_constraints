@@ -1,3 +1,5 @@
+require 'sexy_pg_constraints/constrainers/helpers'
+
 module SexyPgConstraints
   class Deconstrainer
     extend SexyPgConstraints::Helpers

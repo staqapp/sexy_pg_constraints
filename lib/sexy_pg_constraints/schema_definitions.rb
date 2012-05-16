@@ -1,3 +1,6 @@
+require 'sexy_pg_constraints/constrainers/constrainer'
+require 'sexy_pg_constraints/constrainers/deconstrainer'
+
 module SexyPgConstraints
   module SchemaDefinitions
     def constrain(*args)
