@@ -24,14 +24,14 @@ Say you have a table "books" and you want your Postgres DB to ensure that their 
   class AddConstraintsToBooks < ActiveRecord::Migration
     def self.up
       constrain :books do |t|
-        t.title :not_blank => true, :alphanumeric => true, :length_within => 3..50
+        t.title :present => true, :alphanumeric => true, :length_within => 3..50
         t.isbn :unique => true, :blacklist => %w(badbook1 badbook2)
       end
     end
 
     def self.down
       deconstrain :books do |t|
-        t.title :not_blank, :alphanumeric, :length_within
+        t.title :present, :alphanumeric, :length_within
         t.isbn :unique, :blacklist
       end
     end
@@ -41,12 +41,12 @@ This will add all the necessary constraints to the database on the next migratio
 
 There's also a syntax for when you don't need to work with multiple columns at once.
 
-  constrain :books, :title, :not_blank => true, :length_within => 3..50
+  constrain :books, :title, :present => true, :length_within => 3..50
 
 The above line works exactly the same as this block
 
   constrain :books do |t|
-    t.title :not_blank => true, :length_within => 3..50
+    t.title :present => true, :length_within => 3..50
   end
 	
 Same applies to deconstrain.
@@ -95,7 +95,7 @@ Below is the list of constraints available and tested so far.
 
 * whitelist
 * blacklist
-* not_blank
+* present
 * within
 * length_within
 * email

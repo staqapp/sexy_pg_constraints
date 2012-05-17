@@ -10,12 +10,12 @@ class GeneralTest < SexyPgConstraintsTest
 
   def test_block_syntax
     ActiveRecord::Migration.constrain :books do |t|
-      t.title :not_blank => true
+      t.title :present => true
       t.isbn :exact_length => 15
       t.author :alphanumeric => true
     end
 
-    assert_prohibits Book, :title, :not_blank do |book|
+    assert_prohibits Book, :title, :present do |book|
       book.title = '  '
     end
 
@@ -28,7 +28,7 @@ class GeneralTest < SexyPgConstraintsTest
     end
 
     ActiveRecord::Migration.deconstrain :books do |t|
-      t.title :not_blank
+      t.title :present
       t.isbn :exact_length
       t.author :alphanumeric
     end
@@ -42,10 +42,10 @@ class GeneralTest < SexyPgConstraintsTest
 
   def test_multiple_constraints_per_line
     ActiveRecord::Migration.constrain :books do |t|
-      t.title :not_blank => true, :alphanumeric => true, :blacklist => %w(foo bar)
+      t.title :present => true, :alphanumeric => true, :blacklist => %w(foo bar)
     end
 
-    assert_prohibits Book, :title, [:not_blank, :alphanumeric] do |book|
+    assert_prohibits Book, :title, [:present, :alphanumeric] do |book|
       book.title = ' '
     end
 
@@ -58,7 +58,7 @@ class GeneralTest < SexyPgConstraintsTest
     end
 
     ActiveRecord::Migration.deconstrain :books do |t|
-      t.title :not_blank, :alphanumeric, :blacklist
+      t.title :present, :alphanumeric, :blacklist
     end
 
     assert_allows Book do |book|

@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class NotBlankTest < SexyPgConstraintsTest
+class PresentTest < SexyPgConstraintsTest
   def assert_protects_from_blank(column, contraint)
     ActiveRecord::Migration.constrain :books, column, contraint => true
 
@@ -19,15 +19,15 @@ class NotBlankTest < SexyPgConstraintsTest
     end
   end
 
-  def test_not_blank
-    assert_protects_from_blank(:author, :not_blank)
+  def test_present
+    assert_protects_from_blank(:author, :present)
   end
 
   def test_present
     assert_protects_from_blank(:author, :present)
   end
 
-  def test_not_blank_on_a_column_whose_name_is_a_sql_keyword
-    assert_protects_from_blank(:as, :not_blank)
+  def test_present_on_a_column_whose_name_is_a_sql_keyword
+    assert_protects_from_blank(:as, :present)
   end
 end

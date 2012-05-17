@@ -26,13 +26,11 @@ module SexyPgConstraints
     # The value must have at least 1 non-space character.
     #
     # Example:
-    #   constrain :books, :title, :not_blank => true
+    #   constrain :books, :title, :present => true
     #
-    def not_blank(column, options)
+    def present(column, options)
       %{check ( length(btrim("#{column}")) > 0 )}
     end
-    alias_method :present, :not_blank
-    module_function :present
 
     ##
     # The value must have characters other than those listed in the option string.
