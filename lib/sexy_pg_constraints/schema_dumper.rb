@@ -7,11 +7,8 @@ module SexyPgConstraints
     end
 
     module ClassMethods
-      def dump_constraint(table, constraint)
-        column_names = table.columns.map {|column| column.name }
-        match = constraint.match(/^CONSTRAINT #{table.name}_(#{column_names.join('|')})_(a-z_) CHECK /)
-
-        "constrain :#{table.name}, :#{match[1]}, #{match[2]} => true"
+      def dump_constraint(constraint)
+        %{add_constraint "#{constraint.table_name}", :check => "#{constraint.expression}", :name => "#{constraint.name}"}
       end
     end
 
@@ -20,16 +17,16 @@ module SexyPgConstraints
       table_constraints(table_name, stream)
     end
 
-    private
-      def table_constraints(table_name, stream)
-        if (constraints = @connection.constraints(table_name)).any?
-          constrain_statements = constraints.map do |constraint|
-            '  ' + self.class.dump_constraint(table_name, constraint)
-          end
-
-          stream.puts constrain_statements.sort.join("\n")
-          stream.puts
+  private
+    def table_constraints(table_name, stream)
+      if (constraints = @connection.check_constraints(table_name)).any?
+        constrain_statements = constraints.map do |constraint|
+          '  ' + self.class.dump_constraint(constraint)
         end
+
+        stream.puts constrain_statements.sort.join("\n")
+        stream.puts
       end
+    end
   end
 end
