@@ -8,7 +8,7 @@ module SexyPgConstraints
 
     module ClassMethods
       def dump_constraint(constraint)
-        %{add_constraint "#{constraint.table_name}", :check => "#{constraint.expression}", :name => "#{constraint.name}"}
+        %{add_constraint "#{constraint.table_name}", "#{constraint.column_name}", :#{constraint.constraint} => #{constraint.argument.inspect}, :name => "#{constraint.name}"}
       end
     end
 

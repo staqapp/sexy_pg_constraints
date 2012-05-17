@@ -24,7 +24,7 @@ class SexyPgConstraints::SchemaDumperTest < ActiveSupport::TestCase
   end
 
   test 'dump check constraint' do
-    assert_dump %{add_constraint "foos", :check => "(length(btrim((city)::text)) > 0)", :name => "foos_city_present"},
+    assert_dump %{add_constraint "foos", "city", :present => true, :name => "foos_city_present"},
        SexyPgConstraints::ConnectionAdapters::CheckConstraintDefinition.new('foos', 'city', 'foos_city_present', "(length(btrim((city)::text)) > 0)")
   end
 
