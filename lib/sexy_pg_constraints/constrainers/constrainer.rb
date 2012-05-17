@@ -26,7 +26,7 @@ module SexyPgConstraints
       def add_constraints(table, column, constraints)
         constraints.each_pair do |type, options|
           execute "alter table #{table} add constraint #{make_title(table, column, type)} " \
-            + SexyPgConstraints::Constraints.send(type, table, column, options) + ';'
+            + SexyPgConstraints::Constraints.send(type, column, options) + ';'
         end
       end
     end
