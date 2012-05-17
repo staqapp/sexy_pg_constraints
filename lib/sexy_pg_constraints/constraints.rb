@@ -45,21 +45,19 @@ module SexyPgConstraints
     ##
     # The value must not have leading or trailing spaces.
     #
-    # You can pass a string as an option to indicate what characters are trimmed.
+    # You can pass a string as an option to indicate what characters are stripped.
     #
     # Example:
-    #   constrain :books, :title, :trimmed => true
-    #   constrain :books, :title, :trimmed => "abc"
+    #   constrain :books, :title, :stripped => true
+    #   constrain :books, :title, :stripped => "abc"
     #
-    def trimmed(column, options)
+    def stripped(column, options)
       if options == true
         %{check (length("#{column}") = length(btrim("#{column}")))}
       else
         %{check (length("#{column}") = length(btrim("#{column}", E'#{options}')))}
       end
     end
-    alias_method :stripped, :trimmed
-    module_function :stripped
 
     ##
     # The numeric value must be within given range.

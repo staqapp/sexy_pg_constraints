@@ -50,7 +50,7 @@ Gem::Specification.new do |s|
     "test/support/database.yml.example",
     "test/support/models.rb",
     "test/test_helper.rb",
-    "test/trimmed_test.rb",
+    "test/stripped_test.rb",
     "test/whitelist_test.rb",
     "test/within_test.rb",
     "test/xor_test.rb"
