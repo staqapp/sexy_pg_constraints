@@ -2,7 +2,7 @@ require 'test_helper'
 
 class FormatTest < SexyPgConstraintsTest
   def test_format_case_insensitive
-    ActiveRecord::Migration.constrain :books, :title, :format => /^[a-z]+$/i
+    ActiveRecord::Migration.add_constraint :books, :title, :format => /^[a-z]+$/i
 
     assert_prohibits Book, :title, :format do |book|
       book.title = 'abc3'
@@ -20,7 +20,7 @@ class FormatTest < SexyPgConstraintsTest
       book.title = 'ABc'
     end
 
-    ActiveRecord::Migration.deconstrain :books, :title, :format
+    ActiveRecord::Migration.drop_constraint :books, :title, :format
 
     assert_allows Book do |book|
       book.title = 'abc3'
@@ -28,7 +28,7 @@ class FormatTest < SexyPgConstraintsTest
   end
 
   def test_format_case_insensitive_on_a_column_whose_name_is_a_sql_keyword
-    ActiveRecord::Migration.constrain :books, :as, :format => /^[a-z]+$/i
+    ActiveRecord::Migration.add_constraint :books, :as, :format => /^[a-z]+$/i
 
     assert_prohibits Book, :as, :format do |book|
       book.as = 'abc3'
@@ -46,7 +46,7 @@ class FormatTest < SexyPgConstraintsTest
       book.as = 'ABc'
     end
 
-    ActiveRecord::Migration.deconstrain :books, :as, :format
+    ActiveRecord::Migration.drop_constraint :books, :as, :format
 
     assert_allows Book do |book|
       book.as = 'abc3'
@@ -54,7 +54,7 @@ class FormatTest < SexyPgConstraintsTest
   end
 
   def test_format_case_sensitive
-    ActiveRecord::Migration.constrain :books, :title, :format => /^[a-z]+$/
+    ActiveRecord::Migration.add_constraint :books, :title, :format => /^[a-z]+$/
 
     assert_prohibits Book, :title, :format do |book|
       book.title = 'aBc'
@@ -64,7 +64,7 @@ class FormatTest < SexyPgConstraintsTest
       book.title = 'abc'
     end
 
-    ActiveRecord::Migration.deconstrain :books, :title, :format
+    ActiveRecord::Migration.drop_constraint :books, :title, :format
 
     assert_allows Book do |book|
       book.title = 'aBc'
@@ -72,7 +72,7 @@ class FormatTest < SexyPgConstraintsTest
   end
 
   def test_format_case_sensitive_on_a_column_whose_name_is_a_sql_keyword
-    ActiveRecord::Migration.constrain :books, :as, :format => /^[a-z]+$/
+    ActiveRecord::Migration.add_constraint :books, :as, :format => /^[a-z]+$/
 
     assert_prohibits Book, :as, :format do |book|
       book.as = 'aBc'
@@ -82,7 +82,7 @@ class FormatTest < SexyPgConstraintsTest
       book.as = 'abc'
     end
 
-    ActiveRecord::Migration.deconstrain :books, :as, :format
+    ActiveRecord::Migration.drop_constraint :books, :as, :format
 
     assert_allows Book do |book|
       book.as = 'aBc'

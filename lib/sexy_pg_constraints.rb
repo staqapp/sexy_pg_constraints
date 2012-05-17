@@ -4,10 +4,20 @@ module SexyPgConstraints
   autoload :SchemaDumper
   autoload :Constraints
 
+  autoload_under 'constrainers' do
+    autoload :Constrainer
+    autoload :Deconstrainer
+  end
+
   module ConnectionAdapters
     extend ActiveSupport::Autoload
-    autoload :CheckConstraintDefinition
     autoload :PostgreSQLAdapter, 'sexy_pg_constraints/connection_adapters/postgresql_adapter'
+
+    autoload_under 'abstract' do
+      autoload :CheckConstraintDefinition
+      autoload :SchemaDefinitions
+      autoload :SchemaStatements
+    end
   end
 end
 

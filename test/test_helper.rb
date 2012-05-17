@@ -23,7 +23,7 @@ require "sexy_pg_constraints"
 require 'support/models'
 require 'support/assert_prohibits_allows'
 
-ActiveRecord::ConnectionAdapters::PostgreSQLAdapter.send(:include, SexyPgConstraints::SchemaDefinitions)
+ActiveRecord::ConnectionAdapters::PostgreSQLAdapter.send(:include, SexyPgConstraints::ConnectionAdapters::PostgreSQLAdapter)
 
 class Test::Unit::TestCase
 end

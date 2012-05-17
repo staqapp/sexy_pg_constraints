@@ -1,9 +1,5 @@
-require 'sexy_pg_constraints/constrainers/helpers'
-
 module SexyPgConstraints
   class Constrainer
-    extend SexyPgConstraints::Helpers
-
     def initialize(table, columns = [])
       @table = table.to_s
       @columns = columns
@@ -24,10 +20,7 @@ module SexyPgConstraints
 
     class << self
       def add_constraints(table, column, constraints)
-        constraints.each_pair do |type, options|
-          execute "alter table #{table} add constraint #{make_title(table, column, type)} " \
-            + SexyPgConstraints::Constraints.send(type, column, options) + ';'
-        end
+        ActiveRecord::Base.connection.add_constraint(table, column, constraints)
       end
     end
   end

@@ -2,7 +2,7 @@ require 'test_helper'
 
 class LengthWithinTest < SexyPgConstraintsTest
   def test_length_within_inclusive
-    ActiveRecord::Migration.constrain :books, :title, :length_within => 5..11
+    ActiveRecord::Migration.add_constraint :books, :title, :length_within => 5..11
 
     assert_prohibits Book, :title, :length_within do |book|
       book.title = 'abcdefghijkl'
@@ -16,7 +16,7 @@ class LengthWithinTest < SexyPgConstraintsTest
       book.title = 'abcdefg'
     end
 
-    ActiveRecord::Migration.deconstrain :books, :title, :length_within
+    ActiveRecord::Migration.drop_constraint :books, :title, :length_within
 
     assert_allows Book do |book|
       book.title = 'abcdefghijkl'
@@ -24,7 +24,7 @@ class LengthWithinTest < SexyPgConstraintsTest
   end
 
   def test_length_within_inclusive_on_a_column_whose_name_is_a_sql_keyword
-    ActiveRecord::Migration.constrain :books, :as, :length_within => 5..11
+    ActiveRecord::Migration.add_constraint :books, :as, :length_within => 5..11
 
     assert_prohibits Book, :as, :length_within do |book|
       book.as = 'abcdefghijkl'
@@ -38,7 +38,7 @@ class LengthWithinTest < SexyPgConstraintsTest
       book.as = 'abcdefg'
     end
 
-    ActiveRecord::Migration.deconstrain :books, :as, :length_within
+    ActiveRecord::Migration.drop_constraint :books, :as, :length_within
 
     assert_allows Book do |book|
       book.as = 'abcdefghijkl'
@@ -46,7 +46,7 @@ class LengthWithinTest < SexyPgConstraintsTest
   end
 
   def test_length_within_non_inclusive
-    ActiveRecord::Migration.constrain :books, :title, :length_within => 5...11
+    ActiveRecord::Migration.add_constraint :books, :title, :length_within => 5...11
 
     assert_prohibits Book, :title, :length_within do |book|
       book.title = 'abcdefghijk'
@@ -60,7 +60,7 @@ class LengthWithinTest < SexyPgConstraintsTest
       book.title = 'abcdefg'
     end
 
-    ActiveRecord::Migration.deconstrain :books, :title, :length_within
+    ActiveRecord::Migration.drop_constraint :books, :title, :length_within
 
     assert_allows Book do |book|
       book.title = 'abcdefghijk'
@@ -68,7 +68,7 @@ class LengthWithinTest < SexyPgConstraintsTest
   end
 
   def test_length_within_non_inclusive_on_a_column_whose_name_is_a_sql_keyword
-    ActiveRecord::Migration.constrain :books, :as, :length_within => 5...11
+    ActiveRecord::Migration.add_constraint :books, :as, :length_within => 5...11
 
     assert_prohibits Book, :as, :length_within do |book|
       book.as = 'abcdefghijk'
@@ -82,7 +82,7 @@ class LengthWithinTest < SexyPgConstraintsTest
       book.as = 'abcdefg'
     end
 
-    ActiveRecord::Migration.deconstrain :books, :as, :length_within
+    ActiveRecord::Migration.drop_constraint :books, :as, :length_within
 
     assert_allows Book do |book|
       book.as = 'abcdefghijk'

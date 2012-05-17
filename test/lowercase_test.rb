@@ -2,7 +2,7 @@ require 'test_helper'
 
 class LowercaseTest < SexyPgConstraintsTest
   def test_lowercase
-    ActiveRecord::Migration.constrain :books, :author, :lowercase => true
+    ActiveRecord::Migration.add_constraint :books, :author, :lowercase => true
 
     assert_prohibits Book, :author, :lowercase do |book|
       book.author = 'UPPER'
@@ -12,7 +12,7 @@ class LowercaseTest < SexyPgConstraintsTest
       book.author = 'lower with 1337'
     end
 
-    ActiveRecord::Migration.deconstrain :books, :author, :lowercase
+    ActiveRecord::Migration.drop_constraint :books, :author, :lowercase
 
     assert_allows Book do |book|
       book.author = 'UPPER'

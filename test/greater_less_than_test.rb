@@ -2,7 +2,7 @@ require 'test_helper'
 
 class GreaterLessThanTest < SexyPgConstraintsTest
   def test_greater_than
-    ActiveRecord::Migration.constrain :books, :quantity, :greater_than => 5
+    ActiveRecord::Migration.add_constraint :books, :quantity, :greater_than => 5
 
     assert_prohibits Book, :quantity, :greater_than do |book|
       book.quantity = 5
@@ -12,7 +12,7 @@ class GreaterLessThanTest < SexyPgConstraintsTest
       book.quantity = 6
     end
 
-    ActiveRecord::Migration.deconstrain :books, :quantity, :greater_than
+    ActiveRecord::Migration.drop_constraint :books, :quantity, :greater_than
 
     assert_allows Book do |book|
       book.quantity = 5
@@ -20,7 +20,7 @@ class GreaterLessThanTest < SexyPgConstraintsTest
   end
 
   def test_less_than
-    ActiveRecord::Migration.constrain :books, :quantity, :less_than => 5
+    ActiveRecord::Migration.add_constraint :books, :quantity, :less_than => 5
 
     assert_prohibits Book, :quantity, :less_than do |book|
       book.quantity = 5
@@ -30,7 +30,7 @@ class GreaterLessThanTest < SexyPgConstraintsTest
       book.quantity = 4
     end
 
-    ActiveRecord::Migration.deconstrain :books, :quantity, :less_than
+    ActiveRecord::Migration.drop_constraint :books, :quantity, :less_than
 
     assert_allows Book do |book|
       book.quantity = 5
@@ -38,7 +38,7 @@ class GreaterLessThanTest < SexyPgConstraintsTest
   end
 
   def test_greater_than_or_equal_to
-    ActiveRecord::Migration.constrain :books, :quantity, :greater_than_or_equal_to => 5
+    ActiveRecord::Migration.add_constraint :books, :quantity, :greater_than_or_equal_to => 5
 
     assert_prohibits Book, :quantity, :greater_than_or_equal_to do |book|
       book.quantity = 4
@@ -52,7 +52,7 @@ class GreaterLessThanTest < SexyPgConstraintsTest
       book.quantity = 6
     end
 
-    ActiveRecord::Migration.deconstrain :books, :quantity, :greater_than_or_equal_to
+    ActiveRecord::Migration.drop_constraint :books, :quantity, :greater_than_or_equal_to
 
     assert_allows Book do |book|
       book.quantity = 4
@@ -60,7 +60,7 @@ class GreaterLessThanTest < SexyPgConstraintsTest
   end
 
   def test_less_than_or_equal_to
-    ActiveRecord::Migration.constrain :books, :quantity, :less_than_or_equal_to => 5
+    ActiveRecord::Migration.add_constraint :books, :quantity, :less_than_or_equal_to => 5
 
     assert_prohibits Book, :quantity, :less_than_or_equal_to do |book|
       book.quantity = 6
@@ -74,7 +74,7 @@ class GreaterLessThanTest < SexyPgConstraintsTest
       book.quantity = 4
     end
 
-    ActiveRecord::Migration.deconstrain :books, :quantity, :less_than_or_equal_to
+    ActiveRecord::Migration.drop_constraint :books, :quantity, :less_than_or_equal_to
 
     assert_allows Book do |book|
       book.quantity = 6

@@ -2,7 +2,7 @@ require 'test_helper'
 
 class AlphanumericTest < SexyPgConstraintsTest
   def test_alphanumeric
-    ActiveRecord::Migration.constrain :books, :title, :alphanumeric => true
+    ActiveRecord::Migration.add_constraint :books, :title, :alphanumeric => true
 
     assert_prohibits Book, :title, :alphanumeric do |book|
       book.title = 'asdf@asdf'
@@ -12,7 +12,7 @@ class AlphanumericTest < SexyPgConstraintsTest
       book.title = 'asdf'
     end
 
-    ActiveRecord::Migration.deconstrain :books, :title, :alphanumeric
+    ActiveRecord::Migration.drop_constraint :books, :title, :alphanumeric
 
     assert_allows Book do |book|
       book.title = 'asdf@asdf'
@@ -20,7 +20,7 @@ class AlphanumericTest < SexyPgConstraintsTest
   end
 
   def test_alphanumeric_on_a_column_whose_name_is_a_sql_keyword
-    ActiveRecord::Migration.constrain :books, :as, :alphanumeric => true
+    ActiveRecord::Migration.add_constraint :books, :as, :alphanumeric => true
 
     assert_prohibits Book, :as, :alphanumeric do |book|
       book.as = 'asdf@asdf'
@@ -30,7 +30,7 @@ class AlphanumericTest < SexyPgConstraintsTest
       book.as = 'asdf'
     end
 
-    ActiveRecord::Migration.deconstrain :books, :as, :alphanumeric
+    ActiveRecord::Migration.drop_constraint :books, :as, :alphanumeric
 
     assert_allows Book do |book|
       book.as = 'asdf@asdf'

@@ -2,7 +2,7 @@ require 'test_helper'
 
 class PresentTest < SexyPgConstraintsTest
   def assert_protects_from_blank(column, contraint)
-    ActiveRecord::Migration.constrain :books, column, contraint => true
+    ActiveRecord::Migration.add_constraint :books, column, contraint => true
 
     assert_prohibits Book, column, contraint do |book|
       book.send("#{column}=", ' ')
@@ -12,7 +12,7 @@ class PresentTest < SexyPgConstraintsTest
       book.send("#{column}=", 'foo')
     end
 
-    ActiveRecord::Migration.deconstrain :books, column, contraint
+    ActiveRecord::Migration.drop_constraint :books, column, contraint
 
     assert_allows Book do |book|
       book.send("#{column}=", ' ')

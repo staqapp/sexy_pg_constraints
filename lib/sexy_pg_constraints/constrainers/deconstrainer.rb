@@ -1,9 +1,5 @@
-require 'sexy_pg_constraints/constrainers/helpers'
-
 module SexyPgConstraints
   class Deconstrainer
-    extend SexyPgConstraints::Helpers
-
     def initialize(table, columns = [])
       @table = table.to_s
       @columns = columns
@@ -24,9 +20,7 @@ module SexyPgConstraints
 
     class << self
       def drop_constraints(table, column, *constraints)
-        constraints.each do |type|
-          execute "alter table #{table} drop constraint #{make_title(table, column, type)};"
-        end
+        ActiveRecord::Base.connection.drop_constraint(table, column, *constraints)
       end
     end
   end

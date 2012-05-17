@@ -6,7 +6,7 @@ class StrippedTest < SexyPgConstraintsTest
   DEFAULT_ALLOWED = ['foo', 'foo \t']
 
   def test_stripped
-    ActiveRecord::Migration.constrain :books, :author, :stripped => true
+    ActiveRecord::Migration.add_constraint :books, :author, :stripped => true
 
     DEFAULT_PROHIBITED.each do |prohibited|
       assert_prohibits Book, :author, :stripped do |book|
@@ -20,7 +20,7 @@ class StrippedTest < SexyPgConstraintsTest
       end
     end
 
-    ActiveRecord::Migration.deconstrain :books, :author, :stripped
+    ActiveRecord::Migration.drop_constraint :books, :author, :stripped
 
     DEFAULT_PROHIBITED.each do |prohibited|
       assert_allows Book do |book|
@@ -30,7 +30,7 @@ class StrippedTest < SexyPgConstraintsTest
   end
 
   def test_stripped
-    ActiveRecord::Migration.constrain :books, :author, :stripped => true
+    ActiveRecord::Migration.add_constraint :books, :author, :stripped => true
 
     DEFAULT_PROHIBITED.each do |prohibited|
       assert_prohibits Book, :author, :stripped do |book|
@@ -44,7 +44,7 @@ class StrippedTest < SexyPgConstraintsTest
       end
     end
 
-    ActiveRecord::Migration.deconstrain :books, :author, :stripped
+    ActiveRecord::Migration.drop_constraint :books, :author, :stripped
 
     DEFAULT_PROHIBITED.each do |prohibited|
       assert_allows Book do |book|
@@ -54,7 +54,7 @@ class StrippedTest < SexyPgConstraintsTest
   end
 
   def test_stripped_on_a_column_whose_name_is_a_sql_keyword
-    ActiveRecord::Migration.constrain :books, :as, :stripped => true
+    ActiveRecord::Migration.add_constraint :books, :as, :stripped => true
 
     DEFAULT_PROHIBITED.each do |prohibited|
       assert_prohibits Book, :as, :stripped do |book|
@@ -68,7 +68,7 @@ class StrippedTest < SexyPgConstraintsTest
       end
     end
 
-    ActiveRecord::Migration.deconstrain :books, :as, :stripped
+    ActiveRecord::Migration.drop_constraint :books, :as, :stripped
 
     DEFAULT_PROHIBITED.each do |prohibited|
       assert_allows Book do |book|
@@ -78,7 +78,7 @@ class StrippedTest < SexyPgConstraintsTest
   end
 
   def test_stripped_with_a_character_list
-    ActiveRecord::Migration.constrain :books, :as, :stripped => '\t '
+    ActiveRecord::Migration.add_constraint :books, :as, :stripped => '\t '
 
     DEFAULT_PROHIBITED + CONFIGURABLE_PROHIBITED.each do |prohibited|
       p prohibited
@@ -93,7 +93,7 @@ class StrippedTest < SexyPgConstraintsTest
       end
     end
 
-    ActiveRecord::Migration.deconstrain :books, :as, :stripped
+    ActiveRecord::Migration.drop_constraint :books, :as, :stripped
 
     DEFAULT_PROHIBITED + CONFIGURABLE_PROHIBITED.each do |prohibited|
       assert_allows Book do |book|
