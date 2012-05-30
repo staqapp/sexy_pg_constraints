@@ -7,8 +7,30 @@ module SexyPgConstraints
     end
 
     module ClassMethods
-      def dump_constraint(constraint)
-        %{add_constraint "#{constraint.table_name}", "#{constraint.column_name}", :#{constraint.constraint} => #{constraint.argument.inspect}, :name => "#{constraint.name}"}
+      def dump_constraints(table_name, column_name, constraints)
+        standard_constraints, constraints_with_irregular_names =
+          constraints.partition do |constraint|
+            constraint.name == make_constraint_title(table_name, column_name, constraint.constraint)
+          end
+
+        constraint_statements = []
+        if standard_constraints.present?
+          constraint_statements << %{add_constraint#{'s' if standard_constraints.many?} "#{table_name}", "#{column_name}", }.tap do |statement|
+            statement << standard_constraints.map do |constraint|
+              ":#{constraint.constraint} => #{constraint.argument.inspect}"
+            end.join(', ')
+          end
+        end
+        if constraints_with_irregular_names.present?
+          constraint_statements += constraints_with_irregular_names.map do |constraint|
+            %{add_constraint "#{table_name}", "#{column_name}", :#{constraint.constraint} => #{constraint.argument.inspect}, :name => "#{constraint.name}"}
+          end
+        end
+        constraint_statements
+      end
+
+      def make_constraint_title(table_name, column_name, constraint)
+        ConnectionAdapters::CheckConstraintDefinition.make_constraint_title(table_name, column_name, constraint)
       end
     end
 
@@ -20,8 +42,11 @@ module SexyPgConstraints
   private
     def table_constraints(table_name, stream)
       if (constraints = @connection.check_constraints(table_name)).any?
-        constrain_statements = constraints.map do |constraint|
-          '  ' + self.class.dump_constraint(constraint)
+        constraints_by_column = constraints.group_by {|constraint| constraint.column_name }
+        constrain_statements = constraints_by_column.flat_map do |column_name, constraints|
+          self.class.dump_constraints(table_name, column_name, constraints).map do |constraint_statement|
+            '  ' + constraint_statement
+          end
         end
 
         stream.puts constrain_statements.sort.join("\n")

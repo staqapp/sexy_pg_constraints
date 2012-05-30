@@ -19,14 +19,14 @@ module SexyPgConstraints
 
       def add_constraint(table, column, constraints)
         constraints.each_pair do |type, options|
-          execute "alter table #{table} add constraint #{make_constraint_title(table, column, type)} " \
+          execute "alter table #{table} add constraint #{CheckConstraintDefinition.make_constraint_title(table, column, type)} " \
             + SexyPgConstraints::Constraints.send(type, column, options) + ';'
         end
       end
 
       def drop_constraint(table, column, *constraints)
         constraints.each do |type|
-          execute "alter table #{table} drop constraint #{make_constraint_title(table, column, type)};"
+          execute "alter table #{table} drop constraint #{CheckConstraintDefinition.make_constraint_title(table, column, type)};"
         end
       end
 
@@ -45,14 +45,6 @@ module SexyPgConstraints
         constraint_info.map do |row|
           CheckConstraintDefinition.new(table_name, row['column'], row['name'], row['expression'])
         end
-      end
-
-      private
-
-      def make_constraint_title(table, column, type)
-        column = column.join('_') if column.respond_to?(:join)
-
-        "#{table}_#{column}_#{type}"
       end
     end
   end

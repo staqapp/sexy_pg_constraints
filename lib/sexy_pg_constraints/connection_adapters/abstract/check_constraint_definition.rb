@@ -10,6 +10,14 @@ module SexyPgConstraints
         '<=' => :less_than_or_equal_to
       }
 
+      class << self
+        def make_constraint_title(table, column, type)
+          column = column.join('_') if column.respond_to?(:join)
+
+          "#{table}_#{column}_#{type}"
+        end
+      end
+
       def initialize(table_name, column_name, name, expression)
         @table_name = table_name
         @column_name = column_name
