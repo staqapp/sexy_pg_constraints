@@ -3,6 +3,13 @@ module SexyPgConstraints
     class CheckConstraintDefinition #:nodoc:
       attr_reader :table_name, :column_name, :name, :constraint, :argument
 
+      OPERATOR_NAMES = {
+        '>' => :greater_than,
+        '<' => :less_than,
+        '>=' => :greater_than_or_equal_to,
+        '<=' => :less_than_or_equal_to
+      }
+
       def initialize(table_name, column_name, name, expression)
         @table_name = table_name
         @column_name = column_name
@@ -24,6 +31,8 @@ module SexyPgConstraints
           [:stripped, true]
         when /\(length\(\(#{column_name_regex}\)::text\) = length\(btrim\(\(#{column_name_regex}\)::text, E'(.*)'\)\)\)/
           [:stripped, $1]
+        when /\(#{column_name_regex} ([<>]=?) (\d+)\)/
+          [OPERATOR_NAMES.fetch($1), Integer($2)]
         else
           raise "Didn't recognize #{expression}"
         end
@@ -136,46 +145,6 @@ end
     # #
     # def positive(column, options)
     #   greater_than_or_equal_to(column, 0)
-    # end
-
-    # ##
-    # # Allow only values less than the provided limit.
-    # #
-    # # Example:
-    # #   constrain :books, :quantity, :greater_than => 12
-    # #
-    # def less_than(column, options)
-    #   %{check ("#{column}" < #{options})}
-    # end
-
-    # ##
-    # # Allow only values less than or equal to the provided limit.
-    # #
-    # # Example:
-    # #   constrain :books, :quantity, :greater_than => 12
-    # #
-    # def less_than_or_equal_to(column, options)
-    #   %{check ("#{column}" <= #{options})}
-    # end
-
-    # ##
-    # # Allow only values greater than the provided limit.
-    # #
-    # # Example:
-    # #   constrain :books, :quantity, :greater_than => 12
-    # #
-    # def greater_than(column, options)
-    #   %{check ("#{column}" > #{options})}
-    # end
-
-    # ##
-    # # Allow only values greater than or equal to the provided limit.
-    # #
-    # # Example:
-    # #   constrain :books, :quantity, :greater_than_or_equal_to => 12
-    # #
-    # def greater_than_or_equal_to(column, options)
-    #   %{check ("#{column}" >= #{options})}
     # end
 
     # ##

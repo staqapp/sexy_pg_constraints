@@ -30,6 +30,8 @@ class SexyPgConstraints::SchemaDumperTest < ActiveSupport::TestCase
       SexyPgConstraints::ConnectionAdapters::CheckConstraintDefinition.new('foos', 'city', 'foos_city_stripped', "(length((city)::text) = length(btrim((city)::text)))")
     assert_dump %{add_constraint "foos", "city", :stripped => "Hello", :name => "foos_city_stripped"},
       SexyPgConstraints::ConnectionAdapters::CheckConstraintDefinition.new('foos', 'city', 'foos_city_stripped', "(length((city)::text) = length(btrim((city)::text, E'Hello')))")
+    assert_dump %{add_constraint "foos", "city", :greater_than => 1, :name => "foos_city_greater_than"},
+      SexyPgConstraints::ConnectionAdapters::CheckConstraintDefinition.new('foos', 'city', 'foos_city_greater_than', "(city > 1)")
   end
 
 private
