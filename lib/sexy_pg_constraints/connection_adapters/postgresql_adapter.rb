@@ -18,9 +18,16 @@ module SexyPgConstraints
       end
 
       def add_constraint(table, column, constraints)
-        constraints.each_pair do |type, options|
-          execute "alter table #{table} add constraint #{CheckConstraintDefinition.make_constraint_title(table, column, type)} " \
-            + SexyPgConstraints::Constraints.send(type, column, options) + ';'
+        if name = constraints.delete(:name)
+          raise 'Expected one constraint for #{name}' if constraints.size > 1
+          type, options = constraints.first
+          execute "alter table #{table} add constraint #{name} " \
+              + SexyPgConstraints::Constraints.send(type, column, options) + ';'
+        else
+          constraints.each_pair do |type, options|
+            execute "alter table #{table} add constraint #{CheckConstraintDefinition.make_constraint_title(table, column, type)} " \
+              + SexyPgConstraints::Constraints.send(type, column, options) + ';'
+          end
         end
       end
 
