@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Maxim Chernyak", "Ben Woosley"]
-  s.date = "2012-05-03"
+  s.date = "2012-05-30"
   s.description = "Use migrations and simple syntax to manage constraints in PostgreSQL DB."
   s.email = "ben.woosley@gmail.com"
   s.extra_rdoc_files = [
@@ -27,12 +27,15 @@ Gem::Specification.new do |s|
     "VERSION",
     "init.rb",
     "lib/sexy_pg_constraints.rb",
-    "lib/sexy_pg_constraints/constrainer.rb",
+    "lib/sexy_pg_constraints/connection_adapters/abstract/check_constraint_definition.rb",
+    "lib/sexy_pg_constraints/connection_adapters/abstract/schema_definitions.rb",
+    "lib/sexy_pg_constraints/connection_adapters/abstract/schema_statements.rb",
+    "lib/sexy_pg_constraints/connection_adapters/postgresql_adapter.rb",
+    "lib/sexy_pg_constraints/constrainers/constrainer.rb",
+    "lib/sexy_pg_constraints/constrainers/deconstrainer.rb",
     "lib/sexy_pg_constraints/constraints.rb",
-    "lib/sexy_pg_constraints/deconstrainer.rb",
-    "lib/sexy_pg_constraints/helpers.rb",
     "lib/sexy_pg_constraints/railtie.rb",
-    "lib/sexy_pg_constraints/schema_definitions.rb",
+    "lib/sexy_pg_constraints/schema_dumper.rb",
     "test/alphanumeric_test.rb",
     "test/blacklist_test.rb",
     "test/email_test.rb",
@@ -42,22 +45,23 @@ Gem::Specification.new do |s|
     "test/greater_less_than_test.rb",
     "test/length_within_test.rb",
     "test/lowercase_test.rb",
-    "test/not_blank_test.rb",
     "test/odd_event_test.rb",
     "test/positive_test.rb",
+    "test/present_test.rb",
     "test/reference_test.rb",
+    "test/schema_dumper_test.rb",
+    "test/stripped_test.rb",
     "test/support/assert_prohibits_allows.rb",
     "test/support/database.yml.example",
     "test/support/models.rb",
     "test/test_helper.rb",
-    "test/stripped_test.rb",
     "test/whitelist_test.rb",
     "test/within_test.rb",
     "test/xor_test.rb"
   ]
   s.homepage = "http://github.com/maxim/sexy_pg_constraints"
   s.require_paths = ["lib"]
-  s.rubygems_version = "1.8.11"
+  s.rubygems_version = "1.8.23"
   s.summary = nil
 
   if s.respond_to? :specification_version then
