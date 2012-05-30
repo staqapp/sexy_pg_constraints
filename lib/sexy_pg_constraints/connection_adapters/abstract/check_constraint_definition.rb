@@ -20,6 +20,10 @@ module SexyPgConstraints
         case expression
         when /\(length\(btrim\(\(#{column_name_regex}\)::text\)\) > 0\)/i
           [:present, true]
+        when /\(length\(\(#{column_name_regex}\)::text\) = length\(btrim\(\(#{column_name_regex}\)::text\)\)\)/
+          [:stripped, true]
+        when /\(length\(\(#{column_name_regex}\)::text\) = length\(btrim\(\(#{column_name_regex}\)::text, E'(.*)'\)\)\)/
+          [:stripped, $1]
         else
           raise "Didn't recognize #{expression}"
         end
@@ -49,16 +53,6 @@ end
     # end
 
     # ##
-    # # The value must have at least 1 non-space character.
-    # #
-    # # Example:
-    # #   constrain :books, :title, :present => true
-    # #
-    # def present(column, options)
-    #   %{check ( length(btrim("#{column}")) > 0 )}
-    # end
-
-    # ##
     # # The value must have characters other than those listed in the option string.
     # #
     # # Example:
@@ -66,23 +60,6 @@ end
     # #
     # def not_only(column, options)
     #   %{check ( length(btrim("#{column}", E'#{options}')) > 0 )}
-    # end
-
-    # ##
-    # # The value must not have leading or trailing spaces.
-    # #
-    # # You can pass a string as an option to indicate what characters are stripped.
-    # #
-    # # Example:
-    # #   constrain :books, :title, :stripped => true
-    # #   constrain :books, :title, :stripped => "abc"
-    # #
-    # def stripped(column, options)
-    #   if options == true
-    #     %{check (length("#{column}") = length(btrim("#{column}")))}
-    #   else
-    #     %{check (length("#{column}") = length(btrim("#{column}", E'#{options}')))}
-    #   end
     # end
 
     # ##
