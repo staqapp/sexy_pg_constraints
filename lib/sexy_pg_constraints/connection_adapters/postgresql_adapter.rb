@@ -38,7 +38,7 @@ module SexyPgConstraints
           JOIN pg_attribute a ON a.attnum = c.conkey[1] AND a.attrelid = t.oid
           JOIN pg_namespace ns ON c.connamespace = ns.oid
           WHERE c.contype = 'c'
-            AND t.relname = 'catalog_items'
+            AND t.relname = '#{table_name}'
             AND ns.nspname = ANY (current_schemas(false))
           ORDER BY c.conname
         }
