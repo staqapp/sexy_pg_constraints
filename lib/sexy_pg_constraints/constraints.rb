@@ -139,7 +139,7 @@ module SexyPgConstraints
     # Allow only values less than the provided limit.
     #
     # Example:
-    #   constrain :books, :quantity, :greater_than => 12
+    #   constrain :books, :quantity, :less_than => 12
     #
     def less_than(column, options)
       %{check ("#{column}" < #{options})}
@@ -149,7 +149,7 @@ module SexyPgConstraints
     # Allow only values less than or equal to the provided limit.
     #
     # Example:
-    #   constrain :books, :quantity, :greater_than => 12
+    #   constrain :books, :quantity, :less_than_or_equal_to => 12
     #
     def less_than_or_equal_to(column, options)
       %{check ("#{column}" <= #{options})}
