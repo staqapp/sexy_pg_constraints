@@ -31,6 +31,10 @@ module SexyPgConstraints
         "[a-z_][a-z0-9_$]*"
       end
 
+      def number_capture_regex
+        /(\d+)(?:::bigint)?/
+      end
+
       def translate_expression(expression)
         case expression
         when /\(length\(btrim\(\(#{column_name_regex}\)::text\)\) > 0\)/i
@@ -39,8 +43,11 @@ module SexyPgConstraints
           [:stripped, true]
         when /\(length\(\(#{column_name_regex}\)::text\) = length\(btrim\(\(#{column_name_regex}\)::text, E'(.*)'\)\)\)/
           [:stripped, $1]
-        when /\(#{column_name_regex} ([<>]=?) (\d+)\)/
+        when /\(#{column_name_regex} ([<>]=?) #{number_capture_regex}\)/
           [OPERATOR_NAMES.fetch($1), Integer($2)]
+        when /\(\(#{column_name_regex} >= \(#{number_capture_regex}\)::numeric\) AND \(#{column_name_regex} <(=?) \(#{number_capture_regex}\)::numeric\)\)/
+          low, include_end, high = Integer($1), $2, Integer($3)
+          [:within, include_end.present? ? low..high : low...high]
         else
           raise "Didn't recognize #{expression}"
         end
@@ -77,32 +84,6 @@ end
     # #
     # def not_only(column, options)
     #   %{check ( length(btrim("#{column}", E'#{options}')) > 0 )}
-    # end
-
-    # ##
-    # # The numeric value must be within given range.
-    # #
-    # # Example:
-    # #   constrain :books, :year, :within => 1980..2008
-    # #   constrain :books, :year, :within => 1980...2009
-    # #   constrain :books, :year, :within => {:range => 1979..2008, :exclude_beginning => true}
-    # #   constrain :books, :year, :within => {:range => 1979..2009, :exclude_beginning => true, :exclude_end => true}
-    # # (the four lines above do the same thing)
-    # #
-    # def within(column, options)
-    #   column_ref = column.to_s.include?('"') ? column : %{"#{column}"}
-    #   if options.respond_to?(:to_hash)
-    #     options = options.to_hash
-    #     options.assert_valid_keys(:range, :exclude_end, :exclude_beginning)
-    #     range = options.fetch(:range)
-    #     exclude_end = options.has_key?(:exclude_end) ? options.fetch(:exclude_end) : range.exclude_end?
-    #     exclude_beginning = options.has_key?(:exclude_beginning) ? options.fetch(:exclude_beginning) : false
-    #   else
-    #     range = options
-    #     exclude_end = range.exclude_end?
-    #     exclude_beginning = false
-    #   end
-    #   "check (#{column_ref} >#{'=' unless exclude_beginning} #{range.begin} and #{column_ref} <#{'=' unless exclude_end} #{range.end})"
     # end
 
     # ##

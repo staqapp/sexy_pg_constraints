@@ -33,11 +33,19 @@ class SexyPgConstraints::SchemaDumperTest < ActiveSupport::TestCase
       SexyPgConstraints::ConnectionAdapters::CheckConstraintDefinition.new('foos', 'city', 'crazy_name', "(length((city)::text) = length(btrim((city)::text)))")
   end
 
-  test 'dump check constraint' do
+  test 'stripped' do
     assert_dump %{add_constraint "foos", "city", :stripped => "Hello"},
       SexyPgConstraints::ConnectionAdapters::CheckConstraintDefinition.new('foos', 'city', 'foos_city_stripped', "(length((city)::text) = length(btrim((city)::text, E'Hello')))")
+  end
+
+  test 'greater than' do
     assert_dump %{add_constraint "foos", "city", :greater_than => 1},
       SexyPgConstraints::ConnectionAdapters::CheckConstraintDefinition.new('foos', 'city', 'foos_city_greater_than', "(city > 1)")
+  end
+
+  test 'within' do
+    assert_dump %{add_constraint "people", "cell_phone", :within => 2002000000..9999999999},
+      SexyPgConstraints::ConnectionAdapters::CheckConstraintDefinition.new('people', 'cell_phone', 'people_cell_phone_within', "((cell_phone >= (2002000000)::numeric) AND (cell_phone <= (9999999999::bigint)::numeric))")
   end
 
 private
