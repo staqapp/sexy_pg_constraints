@@ -241,6 +241,31 @@ module SexyPgConstraints
     end
 
     ##
+    # Exclude values not matching the like pattern provided
+    #
+    # Example:
+    #    constrain :orders, :visa, :like => '%FOO%'
+    #
+    def like(column, options)
+      constrain_like(column, 'LIKE', options)
+    end
+
+    ##
+    # Exclude values matching the like pattern provided
+    #
+    # Example:
+    #    constrain :orders, :visa, :not_like => '%FOO%'
+    #
+    def not_like(column, options)
+      constrain_like(column, 'NOT LIKE', options)
+    end
+
+    def constrain_like(column, operator, string)
+      %{check (("#{column}")::text #{operator} '#{string.gsub(/([^'])'([^'])/, '\1\'\'\2')}')}
+    end
+    private :constrain_like
+
+    ##
     # Add foreign key constraint.
     #
     # Example:
