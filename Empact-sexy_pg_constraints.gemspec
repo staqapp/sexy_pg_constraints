@@ -56,7 +56,7 @@ Gem::Specification.new do |s|
     "test/within_test.rb",
     "test/xor_test.rb"
   ]
-  s.homepage = "http://github.com/maxim/sexy_pg_constraints"
+  s.homepage = "https://github.com/Empact/sexy_pg_constraints"
   s.require_paths = ["lib"]
   s.rubygems_version = "1.8.24"
   s.summary = nil
