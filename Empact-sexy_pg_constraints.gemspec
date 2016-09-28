@@ -61,6 +61,9 @@ Gem::Specification.new do |s|
   s.rubygems_version = "1.8.24"
   s.summary = nil
 
+  s.metadata["allowed_push_host"] = "https://packagecloud.io"
+  s.add_development_dependency "test-unit"
+
   if s.respond_to? :specification_version then
     s.specification_version = 3
 

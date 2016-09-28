@@ -1,6 +1,13 @@
 = Sexy PG Constraints
+[![CircleCI](https://circleci.com/gh/staqapp/sexy_pg_contraints.svg?style=shield&circle-token=f3b134f0f9517ec874f09dc167752cd91382ecff)](https://circleci.com/gh/staqapp/sexy_pg_contraints)
 
 If you're on PostgreSQL and see the importance of data-layer constraints - this gem/plugin is for you. It integrates constraints into PostgreSQL adapter so you can add/remove them in your migrations. You get two simple methods for adding/removing constraints, as well as a pack of pre-made constraints.
+
+== Documentation
+[YARD Documentation](https://circleci.com/api/v1/project/staqapp/sexy_pg_contraints/latest/artifacts/0/$CIRCLE_ARTIFACTS/doc/index.html?branch=master&filter=successful) (You must be logged into CircleCI to view.)
+
+== Test Coverage
+[SimpleCov Test Coverage](https://circleci.com/api/v1/project/staqapp/sexy_pg_contraints/latest/artifacts/0/$CIRCLE_ARTIFACTS/coverage/index.html?branch=master&filter=successful) (You must be logged into CircleCI to view.)
 
 == Install
 As a gem
@@ -48,7 +55,7 @@ The above line works exactly the same as this block
   constrain :books do |t|
     t.title :present => true, :length_within => 3..50
   end
-	
+
 Same applies to deconstrain.
 
 === Multi-column constraints
