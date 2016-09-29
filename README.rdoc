@@ -1,5 +1,5 @@
 = STAQ Notes
-This was forked to our private github account in order to maintain on our private gem server (PackageCloud).  This is because it is not currently hosted on RubyGems.org, or another public gem server.
+This was forked to our private github account in order to maintain on our private gem server (PackageCloud).  This is because it is not currently hosted on RubyGems.org, or another public gem server.  This allows us to refer to it in our .gemspec files and have rubygems and bundler manage the dependency chain. 
 
 = Sexy PG Constraints
 
