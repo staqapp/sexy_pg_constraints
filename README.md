@@ -1,5 +1,6 @@
- # Sexy PG Constraints
-[![CircleCI](https://circleci.com/gh/staqapp/sexy_pg_contraints.svg?style#shield&circle-token#f3b134f0f9517ec874f09dc167752cd91382ecff)](https://circleci.com/gh/staqapp/sexy_pg_contraints)
+# Sexy PG Constraints
+## STAQ Notes
+This was forked to our private github account in order to maintain on our private gem server (PackageCloud).  This is because it is not currently hosted on RubyGems.org, or another public gem server.  This allows us to refer to it in our .gemspec files and have rubygems and bundler manage the dependency chain. 
 
 ## Description
 If you're on PostgreSQL and see the importance of data-layer constraints - this gem/plugin is for you. It integrates constraints into PostgreSQL adapter so you can add/remove them in your migrations. You get two simple methods for adding/removing constraints, as well as a pack of pre-made constraints.
