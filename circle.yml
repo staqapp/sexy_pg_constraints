@@ -1,0 +1,27 @@
+machine:
+  environment:
+    COVERAGE: true
+    STAQ_ENV: test
+    STAQ_TEST_DATABASE_URL: postgres://ubuntu:@127.0.0.1:5432/circle_test
+
+database:
+  override:
+    - psql -U ubuntu circle_test < ./test/db/structure.sql
+
+test:
+  override:
+    - bundle exec rake
+  post:
+    - bundle exec yard -c $CIRCLE_ARTIFACTS/doc/.yardoc_db -o $CIRCLE_ARTIFACTS/doc
+
+dependencies:
+  pre:
+    - gem install package_cloud
+
+deployment:
+  production:
+    tag: /v[0-9]+(\.[0-9]+)*/
+    owner: staqapp
+    commands:
+      - bundle exec rake build
+      - package_cloud push STAQ/gems ./pkg/$CIRCLE_PROJECT_REPONAME-*.gem

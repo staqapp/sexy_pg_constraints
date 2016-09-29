@@ -32,54 +32,19 @@ Gem::Specification.new do |s|
     "lib/sexy_pg_constraints/constrainers/helpers.rb",
     "lib/sexy_pg_constraints/constraints.rb",
     "lib/sexy_pg_constraints/railtie.rb",
-    "lib/sexy_pg_constraints/schema_definitions.rb",
-    "test/alphanumeric_test.rb",
-    "test/blacklist_test.rb",
-    "test/email_test.rb",
-    "test/exact_length_test.rb",
-    "test/format_test.rb",
-    "test/general_test.rb",
-    "test/greater_less_than_test.rb",
-    "test/length_within_test.rb",
-    "test/like_test.rb",
-    "test/lowercase_test.rb",
-    "test/odd_event_test.rb",
-    "test/positive_test.rb",
-    "test/present_test.rb",
-    "test/reference_test.rb",
-    "test/stripped_test.rb",
-    "test/support/assert_prohibits_allows.rb",
-    "test/support/database.yml.example",
-    "test/support/models.rb",
-    "test/test_helper.rb",
-    "test/whitelist_test.rb",
-    "test/within_test.rb",
-    "test/xor_test.rb"
+    "lib/sexy_pg_constraints/schema_definitions.rb"
   ]
   s.homepage = "https://github.com/Empact/sexy_pg_constraints"
   s.require_paths = ["lib"]
   s.rubygems_version = "1.8.24"
   s.summary = nil
 
-  if s.respond_to? :specification_version then
-    s.specification_version = 3
+  s.metadata["allowed_push_host"] = "https://packagecloud.io"
+  s.add_development_dependency "test-unit"
 
-    if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<activerecord>, [">= 3.0.0"])
-      s.add_development_dependency(%q<pg>, [">= 0"])
-      s.add_development_dependency(%q<shoulda>, [">= 0"])
-      s.add_development_dependency(%q<jeweler>, [">= 0"])
-    else
-      s.add_dependency(%q<activerecord>, [">= 3.0.0"])
-      s.add_dependency(%q<pg>, [">= 0"])
-      s.add_dependency(%q<shoulda>, [">= 0"])
-      s.add_dependency(%q<jeweler>, [">= 0"])
-    end
-  else
-    s.add_dependency(%q<activerecord>, [">= 3.0.0"])
-    s.add_dependency(%q<pg>, [">= 0"])
-    s.add_dependency(%q<shoulda>, [">= 0"])
-    s.add_dependency(%q<jeweler>, [">= 0"])
-  end
+  s.add_runtime_dependency(%q<activerecord>, [">= 3.0.0"])
+  s.add_development_dependency(%q<pg>, [">= 0"])
+  s.add_development_dependency(%q<shoulda>, [">= 0"])
+  s.add_development_dependency(%q<jeweler>, [">= 0"])
 end
 
