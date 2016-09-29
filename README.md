@@ -132,5 +132,5 @@ All constraints are located in the lib/constraints.rb. Extending this module wit
 * Create better API for adding constraints
 
 ## Contributors
-* Empact[http://github.com/Empact] (Big thanks for lots of work. Better flexibility, more tests, organizing code, bug fixes.)
-* look[http://github.com/look] (Extra constraints: lowercase and xor.)
+* Empact [http://github.com/Empact] (Big thanks for lots of work. Better flexibility, more tests, organizing code, bug fixes.)
+* look [http://github.com/look] (Extra constraints: lowercase and xor.)
