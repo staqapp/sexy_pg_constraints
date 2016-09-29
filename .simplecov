@@ -8,7 +8,7 @@ if ENV["COVERAGE"]
   end
 
   SimpleCov.start do
-    add_filter "/spec/"
+    add_filter "/test/"
     add_filter "/.bundle/"
     add_filter "/vendor/cache/"
   end
