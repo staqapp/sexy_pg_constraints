@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    Empact-sexy_pg_constraints (0.4.1)
+    Empact-sexy_pg_constraints (0.4.2)
       activerecord (>= 3.0.0)
 
 GEM
